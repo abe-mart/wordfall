@@ -10,7 +10,10 @@ export class Dictionary {
         if (this.loaded) return;
         try {
             console.log("Loading dictionary...");
-            const response = await fetch('/dictionary.txt');
+            const baseUrl = import.meta.env.BASE_URL;
+            // Use logical check to ensuring trailing slash if needed, though vite base usually provides it
+            const path = baseUrl.endsWith('/') ? `${baseUrl}dictionary.txt` : `${baseUrl}/dictionary.txt`;
+            const response = await fetch(path);
             if (!response.ok) {
                 console.error("Dictionary fetch failed:", response.status, response.statusText);
                 return;
